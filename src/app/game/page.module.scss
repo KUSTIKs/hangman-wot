@@ -1,0 +1,42 @@
+.contaier {
+  padding: 30px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.task {
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.word {
+  font-size: 64px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.2em;
+  margin-bottom: 60px;
+}
+
+.interface {
+  display: flex;
+  gap: 60px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(6, 50px);
+  gap: 10px;
+}
+
+.tankSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.health {
+  font-size: 32px;
+  font-weight: 700;
+}
