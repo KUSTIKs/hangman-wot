@@ -1,0 +1,14 @@
+.wordMap {
+  font-size: 64px;
+  font-weight: 700;
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.char {
+  width: 1ch;
+  text-align: center;
+  text-transform: uppercase;
+}

@@ -1,4 +1,4 @@
-import { FC, ReactNode, CSSProperties } from 'react';
+import { FC, ReactNode, CSSProperties, ButtonHTMLAttributes } from 'react';
 import { clsx } from 'clsx';
 
 import styles from './button.module.scss';
@@ -10,7 +10,7 @@ type Props = {
   size?: 'medium' | 'large';
   style?: CSSProperties;
   href?: string;
-};
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: FC<Props> = ({
   children,
@@ -18,6 +18,7 @@ const Button: FC<Props> = ({
   variant = 'contained',
   style,
   href,
+  ...attrs
 }) => {
   const isLink = typeof href === 'string';
 
@@ -37,7 +38,7 @@ const Button: FC<Props> = ({
   }
 
   return (
-    <button style={style} className={className}>
+    <button {...attrs} style={style} className={className}>
       {children}
     </button>
   );

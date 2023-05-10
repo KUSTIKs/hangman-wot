@@ -5,12 +5,16 @@
   transition: background-color 200ms ease;
   text-align: center;
   text-transform: uppercase;
+  position: relative;
+  &:disabled {
+    opacity: 0.25;
+  }
 }
 
 .button_variant_contained {
   background-color: var(--color-primary);
   color: var(--color-contrast);
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--color-primary-hover);
   }
 }
@@ -18,7 +22,7 @@
   background-color: var(--color-background);
   color: var(--color-primary);
   border: 3px solid var(--color-primary);
-  &:hover {
+  &:not(:disabled):hover {
     background-color: var(--color-background-hover);
   }
 }
