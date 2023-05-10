@@ -1,0 +1,29 @@
+.button {
+  font-size: 32px;
+  border-radius: 3px;
+  font-weight: 700;
+  transition: background-color 200ms ease;
+}
+
+.button_variant_contained {
+  background-color: var(--color-primary);
+  color: var(--color-contrast);
+  &:hover {
+    background-color: var(--color-primary-hover);
+  }
+}
+.button_variant_outlined {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border: 3px solid var(--color-primary);
+  &:hover {
+    background-color: var(--color-background-hover);
+  }
+}
+
+.button_size_medium {
+  padding: 10px;
+}
+.button_size_large {
+  padding: 20px;
+}
