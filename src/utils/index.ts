@@ -1,1 +1,2 @@
-export { getRandomElement } from './get-random-element';
+export * from './random';
+export { explode } from './explode';

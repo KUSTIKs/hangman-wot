@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { hangmanStoreSelectors, useHangmanStore } from '@/store/hangman';
 import { ALPHABET, HEALTH_PRICE, INITIAL_HEALTH } from '@/constants';
-import { getRandomElement } from '@/utils';
+import { getRandomElement, explode } from '@/utils';
 import { LocalStorageKey } from '@/enums';
 
 import { GameOverModal, Header, LetterButton, WordMap } from './components';
@@ -25,12 +25,19 @@ const Game = () => {
   const tryLetter = useHangmanStore(hangmanStoreSelectors.tryLetter);
   const setWord = useHangmanStore(hangmanStoreSelectors.setWord);
 
+  const tankRef = useRef<HTMLDivElement>(null);
   const [coinsCount, setCoinsCount] = useState<number | null>(null);
 
   const updateWord = useCallback(() => {
     const randomWord = getRandomElement(mapNames);
     setWord(randomWord);
   }, [setWord]);
+
+  const handleTankExplode = () => {
+    if (!tankRef.current) return;
+
+    explode(tankRef.current);
+  };
 
   useEffect(() => {
     if (!isGuessed) return;
@@ -57,6 +64,14 @@ const Game = () => {
     setCoinsCount(storedCoinsCount || 0);
   }, []);
 
+  useEffect(() => {
+    return useHangmanStore.subscribe((state, prevState) => {
+      if (state.wrongGuessesCount > prevState.wrongGuessesCount) {
+        handleTankExplode();
+      }
+    });
+  }, []);
+
   return (
     <>
       <Header coinCount={coinsCount} />
@@ -77,7 +92,9 @@ const Game = () => {
               ))}
             </div>
             <div className={styles.tankSection}>
-              <Image src={TankImg} alt='tank' width={200} priority />
+              <div className={styles.tank} ref={tankRef}>
+                <Image src={TankImg} alt='tank' width={200} priority />
+              </div>
               <p className={styles.health}>
                 Health: {health}/{INITIAL_HEALTH}
               </p>
