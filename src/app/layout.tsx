@@ -9,8 +9,11 @@ const comicNeue = Comic_Neue({
 });
 
 export const metadata = {
-  title: 'Hangman WOT',
+  title: 'WOT Hangman',
   description: 'Hangman game with Word of Tanks maps',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 type Props = {
