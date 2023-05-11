@@ -1,10 +1,15 @@
+import { FC } from 'react';
 import Link from 'next/link';
 
 import { Icon } from '@/components';
 
 import styles from './header.module.scss';
 
-const Header = () => {
+type Props = {
+  coinCount: number;
+};
+
+const Header: FC<Props> = ({ coinCount }) => {
   return (
     <header>
       <div className={styles.container}>
@@ -13,7 +18,7 @@ const Header = () => {
         </Link>
         <p className={styles.coins}>
           <Icon.Coin className={styles.coinIcon} size={37} />
-          <span>32</span>
+          <span>{coinCount}</span>
         </p>
       </div>
     </header>

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { ALPHABET, INITIAL_HEALTH } from '@/constants';
 import { getRandomElement } from '@/utils';
 
-import { Header, LetterButton, WordMap } from './components';
+import { GameOverModal, Header, LetterButton, WordMap } from './components';
 
 import TankImg from '@/assets/images/tank.svg';
 import mapNames from '@/data/map-names.json';
@@ -15,6 +15,8 @@ import styles from './page.module.scss';
 
 const Game = () => {
   const [hiddenWord, setHiddenWord] = useState(getRandomElement(mapNames));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [coinsCount, setCoinsCount] = useState(0);
   const [health, setHealth] = useState(INITIAL_HEALTH);
   const [triedLetters, setTriedLetters] = useState<string[]>([]);
   const guessedWordMap = [...hiddenWord].map((char) => {
@@ -32,6 +34,8 @@ const Game = () => {
   const isLost = health <= 0;
   const isGameOver = isGuessed || isLost;
 
+  const gotCoins = health * 10;
+
   const handleLetterClick = (letter: string) => {
     if (isGameOver) return;
 
@@ -42,17 +46,25 @@ const Game = () => {
     setTriedLetters([...triedLetters, letter]);
   };
 
+  const handlePlayAgain = () => {
+    setHiddenWord(getRandomElement(mapNames));
+    setHealth(INITIAL_HEALTH);
+    setTriedLetters([]);
+  };
+
   useEffect(() => {
-    if (isGuessed) {
-      alert('You won!');
-    } else if (isLost) {
-      alert('You lost!');
-    }
-  }, [isGuessed, isLost]);
+    setIsModalOpen(isGameOver);
+  }, [isGameOver]);
+
+  useEffect(() => {
+    if (!isGuessed) return;
+
+    setCoinsCount((state) => state + gotCoins);
+  }, [gotCoins, isGuessed]);
 
   return (
     <>
-      <Header />
+      <Header coinCount={coinsCount} />
       <main>
         <div className={styles.contaier}>
           <p className={styles.task}>Guess the name of map</p>
@@ -70,7 +82,7 @@ const Game = () => {
               ))}
             </div>
             <div className={styles.tankSection}>
-              <Image src={TankImg} alt='tank' width={200} />
+              <Image src={TankImg} alt='tank' width={200} priority />
               <p className={styles.health}>
                 Health: {health}/{INITIAL_HEALTH}
               </p>
@@ -78,6 +90,12 @@ const Game = () => {
           </div>
         </div>
       </main>
+      <GameOverModal
+        isOpen={isModalOpen}
+        isWin={isGuessed}
+        gotCoins={gotCoins}
+        handlePlayAgain={handlePlayAgain}
+      />
     </>
   );
 };

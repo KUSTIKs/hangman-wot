@@ -20,7 +20,10 @@ type Props = {
 const RootLayout = ({ children }: Props) => {
   return (
     <html lang='en'>
-      <body className={comicNeue.className}>{children}</body>
+      <body className={comicNeue.className}>
+        {children}
+        <div id='modal-root' />
+      </body>
     </html>
   );
 };
