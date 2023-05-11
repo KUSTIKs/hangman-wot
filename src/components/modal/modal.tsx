@@ -2,8 +2,10 @@
 
 import { CSSProperties, FC, ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import styles from './modal.module.scss';
+import clsx from 'clsx';
 
 type Props = {
   children: ReactNode;
@@ -38,17 +40,57 @@ const Modal: FC<Props> = ({
   }
 
   const modal = (
-    <div className={styles.overlay} onClick={handleClose}>
+    <motion.div
+      className={clsx(styles.overlay, {
+        [styles.overlay_closed]: !isOpen,
+      })}
+      onClick={handleClose}
+      transition={{
+        type: 'spring',
+        duration: 0.2,
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className={styles.container}>
-        <div className={styles.modal} style={style}>
+        <motion.div
+          className={styles.modal}
+          style={style}
+          transition={{
+            type: 'spring',
+            duration: 0.5,
+          }}
+          initial={{ y: '-10vh' }}
+          animate={{ y: 0 }}
+          exit={{ y: '-10vh' }}
+        >
           {children}
-        </div>
-        {buttons && <div className={styles.buttons}>{buttons}</div>}
+        </motion.div>
+        {buttons && (
+          <motion.div
+            className={styles.buttons}
+            transition={{
+              type: 'spring',
+              duration: 0.5,
+            }}
+            initial={{ y: '10vh' }}
+            animate={{ y: 0 }}
+            exit={{ y: '10vh' }}
+          >
+            {buttons}
+          </motion.div>
+        )}
       </div>
-    </div>
+    </motion.div>
   );
 
-  return createPortal(isOpen ? modal : null, container);
+  return createPortal(
+    <AnimatePresence initial={false} onExitComplete={() => null} mode='wait'>
+      {isOpen && modal}
+    </AnimatePresence>,
+    container
+  );
 };
 
 export { Modal };
