@@ -1,25 +1,26 @@
 import { FC } from 'react';
 
+import { hangmanStoreSelectors, useHangmanStore } from '@/store/hangman';
 import { Button, Icon, Modal } from '@/components';
+import { HEALTH_PRICE } from '@/constants';
 
 import styles from './game-over-modal.module.scss';
 
 type Props = {
-  isOpen: boolean;
-  isWin: boolean;
-  gotCoins: number;
   handlePlayAgain: () => void;
 };
 
-const GameOverModal: FC<Props> = ({
-  isWin,
-  gotCoins,
-  handlePlayAgain,
-  isOpen,
-}) => {
+const GameOverModal: FC<Props> = ({ handlePlayAgain }) => {
+  const isOver = useHangmanStore(hangmanStoreSelectors.isOver);
+  const isGuessed = useHangmanStore(hangmanStoreSelectors.isGuessed);
+  const health = useHangmanStore(hangmanStoreSelectors.health);
+  const word = useHangmanStore(hangmanStoreSelectors.word);
+
+  const gotCoins = health * HEALTH_PRICE;
+
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isOver}
       buttons={
         <>
           <Button href='/' size='large' variant='contained'>
@@ -37,12 +38,12 @@ const GameOverModal: FC<Props> = ({
     >
       <p className={styles.title}>Game Over</p>
       <p className={styles.subtite}>
-        {isWin ? (
+        {isGuessed ? (
           <>
             You got {gotCoins} <Icon.Coin className={styles.coinIcon} />
           </>
         ) : (
-          <>You lost</>
+          <>You lost. It was {word}</>
         )}
       </p>
     </Modal>

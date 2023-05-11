@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { ALPHABET, INITIAL_HEALTH } from '@/constants';
+import { hangmanStoreSelectors, useHangmanStore } from '@/store/hangman';
+import { ALPHABET, HEALTH_PRICE, INITIAL_HEALTH } from '@/constants';
 import { getRandomElement } from '@/utils';
+import { LocalStorageKey } from '@/enums';
 
 import { GameOverModal, Header, LetterButton, WordMap } from './components';
 
@@ -14,53 +16,46 @@ import mapNames from '@/data/map-names.json';
 import styles from './page.module.scss';
 
 const Game = () => {
-  const [hiddenWord, setHiddenWord] = useState(getRandomElement(mapNames));
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [coinsCount, setCoinsCount] = useState(0);
-  const [health, setHealth] = useState(INITIAL_HEALTH);
-  const [triedLetters, setTriedLetters] = useState<string[]>([]);
-  const guessedWordMap = [...hiddenWord].map((char) => {
-    const isLetter = ALPHABET.includes(char.toLowerCase());
-    const isTried = triedLetters.includes(char.toLowerCase());
+  const word = useHangmanStore(hangmanStoreSelectors.word);
+  const health = useHangmanStore(hangmanStoreSelectors.health);
+  const triedLetters = useHangmanStore(hangmanStoreSelectors.triedLetters);
+  const guessedWordMap = useHangmanStore(hangmanStoreSelectors.guessedWordMap);
+  const isGuessed = useHangmanStore(hangmanStoreSelectors.isGuessed);
 
-    if (!isLetter || isTried) {
-      return char;
-    }
+  const tryLetter = useHangmanStore(hangmanStoreSelectors.tryLetter);
+  const setWord = useHangmanStore(hangmanStoreSelectors.setWord);
 
-    return null;
-  });
+  const [coinsCount, setCoinsCount] = useState<number | null>(null);
 
-  const isGuessed = guessedWordMap.every((char) => char !== null);
-  const isLost = health <= 0;
-  const isGameOver = isGuessed || isLost;
-
-  const gotCoins = health * 10;
-
-  const handleLetterClick = (letter: string) => {
-    if (isGameOver) return;
-
-    if (!hiddenWord.includes(letter)) {
-      setHealth((state) => state - 1);
-    }
-
-    setTriedLetters([...triedLetters, letter]);
-  };
-
-  const handlePlayAgain = () => {
-    setHiddenWord(getRandomElement(mapNames));
-    setHealth(INITIAL_HEALTH);
-    setTriedLetters([]);
-  };
-
-  useEffect(() => {
-    setIsModalOpen(isGameOver);
-  }, [isGameOver]);
+  const updateWord = useCallback(() => {
+    const randomWord = getRandomElement(mapNames);
+    setWord(randomWord);
+  }, [setWord]);
 
   useEffect(() => {
     if (!isGuessed) return;
+    const gotCoins = health * HEALTH_PRICE;
 
-    setCoinsCount((state) => state + gotCoins);
-  }, [gotCoins, isGuessed]);
+    setCoinsCount((state) => (state || 0) + gotCoins);
+  }, [health, isGuessed]);
+
+  useEffect(() => {
+    updateWord();
+  }, [updateWord]);
+
+  useEffect(() => {
+    if (typeof coinsCount === 'number') {
+      localStorage.setItem('coins', String(coinsCount));
+    }
+  }, [coinsCount]);
+
+  useEffect(() => {
+    const storedCoinsCount = Number(
+      localStorage.getItem(LocalStorageKey.COINS)
+    );
+
+    setCoinsCount(storedCoinsCount || 0);
+  }, []);
 
   return (
     <>
@@ -75,9 +70,9 @@ const Game = () => {
                 <LetterButton
                   letter={letter}
                   key={letter}
-                  isCorrect={hiddenWord.toLowerCase().includes(letter)}
+                  isCorrect={word.toLowerCase().includes(letter)}
                   isTried={triedLetters.includes(letter)}
-                  onClick={() => handleLetterClick(letter)}
+                  onClick={() => tryLetter(letter)}
                 />
               ))}
             </div>
@@ -90,12 +85,7 @@ const Game = () => {
           </div>
         </div>
       </main>
-      <GameOverModal
-        isOpen={isModalOpen}
-        isWin={isGuessed}
-        gotCoins={gotCoins}
-        handlePlayAgain={handlePlayAgain}
-      />
+      <GameOverModal handlePlayAgain={updateWord} />
     </>
   );
 };

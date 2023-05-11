@@ -5,10 +5,12 @@
   display: flex;
   justify-content: center;
   gap: 5px;
+  height: 1.5em;
 }
 
 .char {
   width: 1ch;
+  line-height: 1.5em;
   text-align: center;
   text-transform: uppercase;
 }
