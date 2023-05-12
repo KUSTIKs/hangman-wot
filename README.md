@@ -2,7 +2,8 @@
 
 This is a Hangman-style game where you guess the name of a randomly selected World of Tanks map.
 
-![banner](https://github.com/KUSTIKs/hangman-wot/assets/62993891/255f2f69-1c5f-4696-8d8f-f61513741b59)
+![banner](https://github.com/KUSTIKs/hangman-wot/assets/62993891/b8e65be5-63fa-4e0c-81fe-78795502add3)
+
 
 ## Installation
 
