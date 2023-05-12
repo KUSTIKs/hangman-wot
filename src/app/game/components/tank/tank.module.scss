@@ -1,0 +1,18 @@
+.wrapper {
+  border-radius: 15px;
+  background-color: var(--color-light-green);
+  position: relative;
+}
+
+.tankImage {
+  display: block;
+}
+
+.health {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--color-background);
+  border-radius: 20px;
+  padding: 5px 15px;
+}

@@ -23,7 +23,7 @@ const GameOverModal: FC<Props> = ({ handlePlayAgain }) => {
       isOpen={isOver}
       buttons={
         <>
-          <Button href='/' size='large' variant='contained'>
+          <Button href='/' size='large' variant='outlined'>
             Go Home
           </Button>
           <Button size='large' variant='contained' onClick={handlePlayAgain}>

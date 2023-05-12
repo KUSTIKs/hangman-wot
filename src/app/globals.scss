@@ -1,11 +1,12 @@
 :root {
-  --color-primary: hsl(0, 0%, 0%);
-  --color-primary-hover: hsl(0, 0%, 25%);
+  --color-primary: hsl(30, 100%, 50%);
+  --color-primary-hover: hsl(30, 100%, 60%);
   --color-text: hsl(0, 0%, 0%);
   --color-contrast: hsl(0, 0%, 100%);
   --color-background: hsl(0, 0%, 100%);
   --color-background-hover: hsl(0, 0%, 90%);
   --color-yellow: hsl(40, 100%, 50%);
+  --color-light-green: hsl(90, 30%, 80%);
 }
 
 * {

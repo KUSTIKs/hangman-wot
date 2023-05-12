@@ -1,0 +1,11 @@
+.title {
+  font-weight: 400;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  gap: 10px;
+}

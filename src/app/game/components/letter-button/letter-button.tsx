@@ -20,6 +20,13 @@ const LetterButton: FC<Props> = ({ letter, onClick, isTried, isCorrect }) => {
       size='medium'
       onClick={onClick}
       disabled={isTried}
+      style={{
+        fontSize: 20,
+        height: 50,
+        width: 50,
+        textTransform: 'uppercase',
+        overflow: 'hidden',
+      }}
     >
       {!isCorrect && isTried && (
         <svg

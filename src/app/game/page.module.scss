@@ -1,6 +1,6 @@
 .contaier {
   padding: 30px;
-  max-width: 700px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -14,25 +14,6 @@
 .interface {
   display: flex;
   gap: 60px;
-}
-
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(6, 50px);
-  gap: 10px;
-}
-
-.tankSection {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.health {
-  font-size: 32px;
-  font-weight: 700;
-}
-
-.tank {
-  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
 }

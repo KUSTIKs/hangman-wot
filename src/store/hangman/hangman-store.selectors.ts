@@ -10,7 +10,9 @@ const hangmanStoreSelectors = {
   tryLetter: (state: HangmanState) => state.tryLetter,
 
   isGuessed: (state: HangmanState) => {
-    return !hangmanStoreSelectors.guessedWordMap(state).includes(null);
+    return (
+      state.word && !hangmanStoreSelectors.guessedWordMap(state).includes(null)
+    );
   },
   isLost: (state: HangmanState) => {
     return state.wrongGuessesCount >= state.initialHealth;

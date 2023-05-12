@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { Comic_Neue } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 
 import './globals.scss';
 
-const comicNeue = Comic_Neue({
+const comicNeue = Poppins({
   subsets: ['latin'],
-  weight: ['700', '400'],
+  weight: ['500', '400'],
 });
 
 export const metadata = {
