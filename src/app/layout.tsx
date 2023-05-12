@@ -17,6 +17,10 @@ export const metadata = {
   openGraph: {
     image: '/meta-image.png',
   },
+  twitter: {
+    card: 'summary_large_image',
+    image: '/meta-image.png',
+  },
 };
 
 type Props = {
