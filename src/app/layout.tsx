@@ -14,6 +14,9 @@ export const metadata = {
   icons: {
     icon: '/favicon.svg',
   },
+  openGraph: {
+    image: '/meta-image.png',
+  },
 };
 
 type Props = {
