@@ -15,11 +15,11 @@ export const metadata = {
     icon: '/favicon.svg',
   },
   openGraph: {
-    image: '/meta-image.png',
+    images: ['/meta-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    image: '/meta-image.png',
+    images: ['/meta-image.png'],
   },
 };
 
