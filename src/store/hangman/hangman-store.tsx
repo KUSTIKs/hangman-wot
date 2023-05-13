@@ -1,10 +1,11 @@
-import { create } from 'zustand';
+import { ReactNode, createContext, useContext } from 'react';
+import { createStore, useStore } from 'zustand';
 
 import { INITIAL_HEALTH } from '@/constants';
 
 import { HangmanState } from './hangman-store.types';
 
-const useHangmanStore = create<HangmanState>((set, get) => ({
+const hangmanStore = createStore<HangmanState>((set, get) => ({
   word: '',
   triedLetters: [],
   initialHealth: INITIAL_HEALTH,
@@ -29,4 +30,13 @@ const useHangmanStore = create<HangmanState>((set, get) => ({
   },
 }));
 
-export { useHangmanStore };
+const HangmanContext = createContext({} as typeof hangmanStore);
+const HangmanStoreProvider = ({ children }: { children: ReactNode }) => (
+  <HangmanContext.Provider value={hangmanStore}>
+    {children}
+  </HangmanContext.Provider>
+);
+const useHangmanStore = <T,>(selector: (state: HangmanState) => T) =>
+  useStore(useContext(HangmanContext), selector);
+
+export { HangmanStoreProvider, useHangmanStore };

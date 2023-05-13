@@ -21,19 +21,9 @@ const GameOverModal: FC<Props> = ({ handlePlayAgain }) => {
   return (
     <Modal
       isOpen={isOver}
-      buttons={
-        <>
-          <Button href='/' size='large' variant='outlined'>
-            Go Home
-          </Button>
-          <Button size='large' variant='contained' onClick={handlePlayAgain}>
-            Play Again
-          </Button>
-        </>
-      }
       style={{
-        textAlign: 'center',
-        minHeight: 300,
+        width: '100%',
+        maxWidth: '600px',
       }}
     >
       <p className={styles.title}>Game Over</p>
@@ -46,6 +36,14 @@ const GameOverModal: FC<Props> = ({ handlePlayAgain }) => {
           <>You lost. It was {word}</>
         )}
       </p>
+      <div className={styles.buttons}>
+        <Button href='/' size='medium' variant='outlined'>
+          Go Home
+        </Button>
+        <Button size='medium' variant='contained' onClick={handlePlayAgain}>
+          Play Again
+        </Button>
+      </div>
     </Modal>
   );
 };

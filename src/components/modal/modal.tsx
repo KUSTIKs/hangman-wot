@@ -9,19 +9,12 @@ import clsx from 'clsx';
 
 type Props = {
   children: ReactNode;
-  buttons?: ReactNode;
   isOpen?: boolean;
   handleClose?: () => void;
   style?: CSSProperties;
 };
 
-const Modal: FC<Props> = ({
-  children,
-  buttons,
-  isOpen,
-  handleClose,
-  style,
-}) => {
+const Modal: FC<Props> = ({ children, isOpen, handleClose, style }) => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -53,35 +46,19 @@ const Modal: FC<Props> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className={styles.container}>
-        <motion.div
-          className={styles.modal}
-          style={style}
-          transition={{
-            type: 'spring',
-            duration: 0.5,
-          }}
-          initial={{ y: '-10vh' }}
-          animate={{ y: 0 }}
-          exit={{ y: '-10vh' }}
-        >
-          {children}
-        </motion.div>
-        {buttons && (
-          <motion.div
-            className={styles.buttons}
-            transition={{
-              type: 'spring',
-              duration: 0.5,
-            }}
-            initial={{ y: '10vh' }}
-            animate={{ y: 0 }}
-            exit={{ y: '10vh' }}
-          >
-            {buttons}
-          </motion.div>
-        )}
-      </div>
+      <motion.div
+        className={styles.modal}
+        style={style}
+        transition={{
+          type: 'spring',
+          duration: 0.5,
+        }}
+        initial={{ y: '-10vh' }}
+        animate={{ y: 0 }}
+        exit={{ y: '10vh' }}
+      >
+        {children}
+      </motion.div>
     </motion.div>
   );
 

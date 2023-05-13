@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 import { hangmanStoreSelectors, useHangmanStore } from '@/store/hangman';
-import { INITIAL_HEALTH } from '@/constants';
 import { explode } from '@/utils';
 
 import TankImg from '@/assets/images/tank.png';
@@ -11,7 +10,12 @@ import styles from './tank.module.scss';
 
 const Tank = () => {
   const health = useHangmanStore(hangmanStoreSelectors.health);
+  const initialHealth = useHangmanStore(hangmanStoreSelectors.initialHealth);
+  const wrongGuessesCount = useHangmanStore(
+    hangmanStoreSelectors.wrongGuessesCount
+  );
 
+  const prevWrongGuessesCount = useRef(wrongGuessesCount);
   const tankWrapperRef = useRef<HTMLDivElement>(null);
 
   const handleTankExplode = () => {
@@ -21,12 +25,12 @@ const Tank = () => {
   };
 
   useEffect(() => {
-    return useHangmanStore.subscribe((state, prevState) => {
-      if (state.wrongGuessesCount > prevState.wrongGuessesCount) {
-        handleTankExplode();
-      }
-    });
-  }, []);
+    if (wrongGuessesCount > prevWrongGuessesCount.current) {
+      handleTankExplode();
+    }
+
+    prevWrongGuessesCount.current = wrongGuessesCount;
+  }, [wrongGuessesCount]);
 
   return (
     <div className={styles.wrapper}>
@@ -42,7 +46,7 @@ const Tank = () => {
         />
       </div>
       <p className={styles.health}>
-        Health: {health}/{INITIAL_HEALTH}
+        Health: {health}/{initialHealth}
       </p>
     </div>
   );

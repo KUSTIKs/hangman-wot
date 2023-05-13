@@ -1,14 +1,22 @@
 .title {
-  font-size: 64px;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 120%;
 }
 
 .subtite {
-  font-size: 24px;
+  font-size: 18px;
+  margin-bottom: 40px;
 }
 
 .coinIcon {
   color: var(--color-yellow);
   vertical-align: middle;
   font-size: 28px;
+}
+
+.buttons {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 20px;
 }

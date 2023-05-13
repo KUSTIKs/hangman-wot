@@ -24,7 +24,7 @@
 
 .title {
   font-weight: 400;
-  font-size: 64px;
+  font-size: clamp(32px, calc((100vw * 32) / 400), 64px);
   line-height: 110%;
   text-align: center;
   margin-bottom: 30px;

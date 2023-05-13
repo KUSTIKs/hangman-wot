@@ -8,9 +8,14 @@ const comicNeue = Poppins({
   weight: ['500', '400'],
 });
 
+const metadataBase = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : `http://localhost:${process.env.PORT || 3000}`;
+
 export const metadata = {
   title: 'WOT Hangman',
   description: 'Hangman game with Word of Tanks maps',
+  metadataBase: new URL(metadataBase),
   icons: {
     icon: '/favicon.svg',
   },

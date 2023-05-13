@@ -13,6 +13,7 @@ import { GameOverModal, Letters, Tank, WordMap } from './components';
 import mapNames from '@/data/map-names.json';
 
 import styles from './page.module.scss';
+import { HangmanStoreProvider } from '@/store/hangman/hangman-store';
 
 const Game = () => {
   const health = useHangmanStore(hangmanStoreSelectors.health);
