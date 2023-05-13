@@ -1,5 +1,9 @@
-import Image from 'next/image';
+'use client';
 
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+import { revealVariants } from '@/utils/framer-variants';
 import { Button } from '@/components';
 import { Header } from '@/widgets';
 
@@ -12,8 +16,16 @@ const Home = () => {
     <>
       <Header />
       <main className={styles.main}>
-        <div className={styles.container}>
-          <div className={styles.tankWrapper}>
+        <motion.div
+          className={styles.container}
+          initial='hidden'
+          whileInView='visible'
+          transition={{
+            staggerChildren: 0.2,
+          }}
+          viewport={{ once: true }}
+        >
+          <motion.div className={styles.tankWrapper} variants={revealVariants}>
             <Image
               src={TankImg}
               alt='tank'
@@ -21,11 +33,11 @@ const Home = () => {
               priority
               draggable={false}
             />
-          </div>
-          <h1 className={styles.title}>
+          </motion.div>
+          <motion.h1 className={styles.title} variants={revealVariants}>
             Guess the name of a World of Tanks map
-          </h1>
-          <div className={styles.buttons}>
+          </motion.h1>
+          <motion.div variants={revealVariants}>
             <Button
               size='large'
               variant='contained'
@@ -34,8 +46,8 @@ const Home = () => {
             >
               Play
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </main>
     </>
   );

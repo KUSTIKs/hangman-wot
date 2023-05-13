@@ -19,7 +19,6 @@
   border-radius: 200px;
   margin-top: 10vh;
   margin-bottom: 40px;
-  animation: slideIn 1s ease;
 }
 
 .title {
@@ -29,21 +28,4 @@
   text-align: center;
   margin-bottom: 30px;
   opacity: 0;
-  animation: slideIn 1s ease 200ms forwards;
-}
-
-.buttons {
-  opacity: 0;
-  animation: slideIn 1s ease 400ms forwards;
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    transform: none;
-    opacity: 1;
-  }
 }

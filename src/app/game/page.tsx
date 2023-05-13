@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 import { coinsStoreSelectors, useCoinsStore } from '@/store/coins';
 import { hangmanStoreSelectors, useHangmanStore } from '@/store/hangman';
@@ -13,7 +14,7 @@ import { GameOverModal, Letters, Tank, WordMap } from './components';
 import mapNames from '@/data/map-names.json';
 
 import styles from './page.module.scss';
-import { HangmanStoreProvider } from '@/store/hangman/hangman-store';
+import { revealVariants } from '@/utils/framer-variants';
 
 const Game = () => {
   const health = useHangmanStore(hangmanStoreSelectors.health);
@@ -43,14 +44,26 @@ const Game = () => {
     <>
       <Header />
       <main>
-        <div className={styles.contaier}>
-          <p className={styles.task}>Guess the name of map</p>
-          <WordMap wordMap={guessedWordMap} />
-          <div className={styles.interface}>
+        <motion.div
+          className={styles.contaier}
+          initial='hidden'
+          whileInView='visible'
+          transition={{
+            staggerChildren: 0.2,
+          }}
+          viewport={{ once: true }}
+        >
+          <motion.p className={styles.task} variants={revealVariants}>
+            Guess the name of map
+          </motion.p>
+          <motion.div variants={revealVariants}>
+            <WordMap wordMap={guessedWordMap} />
+          </motion.div>
+          <motion.div className={styles.interface} variants={revealVariants}>
             <Letters />
             <Tank />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </main>
       <GameOverModal handlePlayAgain={updateWord} />
     </>

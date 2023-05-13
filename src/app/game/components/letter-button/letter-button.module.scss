@@ -1,7 +1,12 @@
-.cross {
+.crossLine1,
+.crossLine2 {
   position: absolute;
-  inset: 0;
-  height: 100%;
+  background-color: currentColor;
+  height: 1px;
   width: 100%;
-  stroke-width: 3px;
+  transform: rotate(45deg);
+}
+
+.crossLine2 {
+  transform: rotate(-45deg);
 }

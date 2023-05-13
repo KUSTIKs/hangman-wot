@@ -1,0 +1,1 @@
+export { revealVariants } from './reveal';
