@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,7 +12,13 @@ import LogoImg from '@/assets/images/logo.svg';
 import styles from './header.module.scss';
 
 const Header: FC = () => {
+  const [isHydrated, setIsHydrated] = useState(false);
+
   const coins = useCoinsStore(coinsStoreSelectors.coins);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -20,10 +26,12 @@ const Header: FC = () => {
         <Link href='/'>
           <Image src={LogoImg} alt='logo' height={26} draggable={false} />
         </Link>
-        <div className={styles.coins}>
-          <Icon.Coin className={styles.coinIcon} size='1.2em' />
-          {coins}
-        </div>
+        {isHydrated && (
+          <div className={styles.coins}>
+            <Icon.Coin className={styles.coinIcon} size='1.2em' />
+            {coins}
+          </div>
+        )}
       </div>
     </header>
   );
